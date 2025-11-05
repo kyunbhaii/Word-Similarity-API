@@ -1,30 +1,30 @@
-# 🔍 Word Similarity API
+# Word Similarity API
 
 A FastAPI-based REST API that returns semantically similar words using a custom-trained Word2Vec model on Stack Overflow technical Q&A data.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
-├── QuerySim.ipynb
-├── app.py
-├── word2vec_model.pkl
-├── stack_overflow_tech_final.parquet
-├── requirements.txt
-└── README.md
+├── QuerySim.ipynb                      # Training notebook
+├── app.py                              # FastAPI application
+├── word2vec_model.pkl                  # Trained Word2Vec model
+├── stack_overflow_tech_final.parquet   # Dataset (Stack Overflow Q&A)
+├── requirements.txt                    # Python dependencies
+└── README.md                           # This file
 ```
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
-### 1️⃣ Prerequisites
+### Prerequisites
 
 - Python ≥ 3.8
 - pip package manager
 
-### 2️⃣ Installation
+### Installation
 
 Install dependencies:
 ```bash
@@ -42,7 +42,7 @@ numpy
 nltk
 ```
 
-### 3️⃣ Running the API
+### Running the API
 
 Start the server:
 ```bash
@@ -57,9 +57,9 @@ Access interactive API docs at:
 
 ---
 
-## 📡 API Endpoints
+## API Endpoints
 
-### **GET /** - Home
+### GET / - Home
 ```bash
 curl http://localhost:8000/
 ```
@@ -70,7 +70,7 @@ curl http://localhost:8000/
 }
 ```
 
-### **GET /similar/{word}** - Get Similar Words
+### GET /similar/{word} - Get Similar Words
 ```bash
 curl "http://localhost:8000/similar/python?topn=5"
 ```
@@ -100,7 +100,7 @@ curl "http://localhost:8000/similar/python?topn=5"
 - `400` - Empty word provided
 - `404` - Word not found in vocabulary
 
-### **GET /health** - Health Check
+### GET /health - Health Check
 ```bash
 curl http://localhost:8000/health
 ```
@@ -114,7 +114,7 @@ curl http://localhost:8000/health
 
 ---
 
-## 🧠 Model Details
+## Model Details
 
 ### Training Process
 
@@ -138,7 +138,7 @@ The Word2Vec model was trained on **3,296 Stack Overflow answers** from Python-r
 
 ---
 
-## 📊 Dataset
+## Dataset
 
 **Source:** Stack Overflow technical Q&A  
 **Format:** Parquet file  
@@ -150,7 +150,7 @@ The Word2Vec model was trained on **3,296 Stack Overflow answers** from Python-r
 
 ---
 
-## 🔧 Text Preprocessing Pipeline
+## Text Preprocessing Pipeline
 
 The following preprocessing steps were applied to clean the answer text:
 
@@ -182,7 +182,7 @@ The following preprocessing steps were applied to clean the answer text:
 
 ---
 
-## 🎯 Example Use Cases
+## Example Use Cases
 
 ### Find similar programming languages:
 ```bash
@@ -201,7 +201,7 @@ curl "http://localhost:8000/similar/django?topn=10"
 
 ---
 
-## 📈 Model Performance
+## Model Performance
 
 **Vocabulary Statistics:**
 - **Total unique words in corpus:** 24,469
@@ -209,12 +209,6 @@ curl "http://localhost:8000/similar/django?topn=10"
 - **Filtered out:** 19,977 rare words (appearing <5 times)
 
 **Sample Similarity Results:**
-
-Query: `http`
-```
-interact (0.91), restful (0.89), mongodb (0.88), 
-applications (0.87), web (0.87)
-```
 
 Query: `class`
 ```
@@ -228,11 +222,17 @@ mysql (0.82), cursor (0.81), domains (0.80),
 entirely (0.80), oursql (0.80)
 ```
 
+Query: `http`
+```
+interact (0.91), restful (0.89), mongodb (0.88), 
+applications (0.87), web (0.87)
+```
+
 ---
 
-## 🔬 Advanced Features
+## Technical Implementation
 
-### 1. **Python-Focused Vocabulary**
+### 1. Python-Focused Vocabulary
 The model captures relationships within Python programming concepts:
 - Object-oriented programming (class, inherit, setattr, myclass)
 - Database operations (sql, mysql, cursor)
@@ -241,20 +241,20 @@ The model captures relationships within Python programming concepts:
 
 **Note:** Due to the focused dataset and min_count=5 filtering, the vocabulary is limited to frequently discussed Python-related terms. Many general tech terms may not be present in the model.
 
-### 2. **Context-Based Similarity**
+### 2. Context-Based Similarity
 Uses Skip-gram architecture to capture:
 - Syntactic patterns
 - Semantic relationships
 - Co-occurrence patterns in technical discussions
 
-### 3. **Efficient Inference**
+### 3. Efficient Inference
 - Model loaded once at startup
 - Fast vector lookups using Gensim
-- Normalized similarity scores (0-1 range)
+- Normalized similarity scores (rounded to 4 decimal places)
 
 ---
 
-## 🛠️ Retraining the Model
+## Retraining the Model
 
 To retrain with your own data:
 
@@ -281,7 +281,7 @@ To retrain with your own data:
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Issue: Model file not found
 **Error:** `FileNotFoundError: word2vec_model.pkl`
@@ -300,7 +300,7 @@ To retrain with your own data:
 
 ---
 
-## 📝 Notes
+## Technical Notes
 
 - Model was trained on **Python-focused** Stack Overflow data, so it performs best with technical programming terms
 - The API is case-insensitive (all queries are lowercased)
@@ -309,25 +309,26 @@ To retrain with your own data:
 
 ---
 
-## 🤝 Contributing
+## Future Improvements
 
-To improve the model:
-1. Add more diverse technical Q&A data
+To enhance the model:
+1. Add more diverse technical Q&A data to expand vocabulary
 2. Experiment with different preprocessing strategies
 3. Tune Word2Vec hyperparameters (window size, vector dimensions)
 4. Try alternative architectures (FastText, GloVe)
+5. Lower min_count threshold to include more technical terms
 
 ---
 
-## 📄 License
+## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 Free for educational and commercial use with attribution.
 
 ---
 
-## 🔗 Related Resources
+## Related Resources
 
 - [Gensim Word2Vec Documentation](https://radimrehurek.com/gensim/models/word2vec.html)
 - [FastAPI Documentation](https://fastapi.tiangolo.com/)
