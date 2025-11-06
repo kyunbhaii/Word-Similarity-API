@@ -7,12 +7,12 @@ A FastAPI-based REST API that returns semantically similar words using a custom-
 ## Project Structure
 
 ```
-├── Word Similarity.ipynb                      # Training notebook
-├── app.py                              # FastAPI application
-├── word2vec_model.pkl                  # Trained Word2Vec model
-├── stack_overflow_tech_final.parquet   # Dataset (Stack Overflow Q&A)
-├── requirements.txt                    # Python dependencies
-└── README.md                           # This file
+├── Word Similarity.ipynb
+├── app.py
+├── word2vec_model.pkl
+├── stack_overflow_tech_final.parquet
+├── requirements.txt
+└── README.md
 ```
 
 ---
